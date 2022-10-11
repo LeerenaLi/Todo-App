@@ -1,9 +1,26 @@
+// import {selectControl} from './control.js';
+
 const createTitle = () => {
     const h3 = document.createElement('h3');
     h3.classList.add('title');
     h3.textContent = 'Todo App';
 
     return h3;
+};
+
+const createSelect = () => {
+    const select = document.createElement('select');
+    select.classList.add('form-select', 'w-auto', 'me-3');
+    select.setAttribute('id', 'select');
+
+    select.insertAdjacentHTML('beforeend', `
+        
+        <option id="option" value="table-light">Обычная</option>
+        <option id="option" value="table-warning">Важная</option>
+        <option id="option" value="table-danger">Срочная</option>
+    `);
+
+    return select;
 };
 
 const createButtonsGroup = params => {
@@ -56,9 +73,11 @@ const createTable = () => {
     return table;
 };
 
-const createRow = ({id, task}) => {
+
+const createRow = ({id, task, priority, status}) => {
     const tr = document.createElement('tr');
-    tr.classList.add('table-light', 'table-row');
+    tr.classList.add('table-row', `${priority}`);
+
     tr.id = id;
     const tdNum = document.createElement('td');
     tdNum.classList.add('task-num');
@@ -71,7 +90,7 @@ const createRow = ({id, task}) => {
 
     const tdStatus = document.createElement('td');
     tdStatus.classList.add('task-status');
-    tdStatus.textContent = 'В процессе';
+    tdStatus.textContent = status;
 
     const tdActions = document.createElement('td');
     tdActions.classList.add('task-actions');
@@ -93,7 +112,6 @@ const createRow = ({id, task}) => {
             text: 'Редактировать',
         },
     ]);
-
     tdActions.append(...btnsActions);
 
     tr.append(tdNum, tdTask, tdStatus, tdActions);
@@ -103,6 +121,7 @@ const createRow = ({id, task}) => {
 
 export default {
     createTitle,
+    createSelect,
     createButtonsGroup,
     createForm,
     createTable,

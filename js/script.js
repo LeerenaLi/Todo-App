@@ -18,7 +18,7 @@ const init = () => {
     } = todoApp;
 
     renderTasks(list, data);
-
+    // selectControl();
     formControl(form, list, data, btnAdd, btnReset);
 
     taskFinish(list);

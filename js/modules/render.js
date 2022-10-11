@@ -2,6 +2,7 @@ import elements from './cteateElements.js';
 
 const {
     createTitle,
+    createSelect,
     createButtonsGroup,
     createForm,
     createTable,
@@ -14,6 +15,7 @@ export const renderTodoApp = (container) => {
 
     const title = createTitle();
     const form = createForm();
+    const select = createSelect();
     const buttonGroup = createButtonsGroup([
         {
             className: 'btn btn-primary me-3',
@@ -29,7 +31,7 @@ export const renderTodoApp = (container) => {
 
     buttonGroup[0].disabled = true;
 
-    form.append(...buttonGroup);
+    form.append(select, ...buttonGroup);
 
     const tableWrapper = document.createElement('div');
     tableWrapper.classList.add('table-wrapper');

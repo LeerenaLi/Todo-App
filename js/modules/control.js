@@ -5,6 +5,7 @@ const {
     createRow,
 } = elements;
 
+
 export const addTaskPage = (task, list) => {
     list.append(createRow(task));
 };
@@ -27,8 +28,11 @@ export const inputControl = (btnAdd, btnReset) => {
     });
 };
 
+
 export const formControl = (form, list, data, btnAdd, btnReset) => {
     inputControl(btnAdd, btnReset);
+    const select = form.querySelector('#select');
+    console.log('select: ', select);
 
     form.addEventListener('submit', e => {
         const data = getStorage();
@@ -37,6 +41,8 @@ export const formControl = (form, list, data, btnAdd, btnReset) => {
         const newTask = {
             id: data.length + 1,
             task: form.input.value,
+            priority: select.value,
+            status: 'в процессе',
         };
         console.log(data);
         addTaskPage(newTask, list);
@@ -48,15 +54,37 @@ export const formControl = (form, list, data, btnAdd, btnReset) => {
 };
 
 export const taskFinish = (list) => {
+    const data = getStorage(`${username}`);
+    console.log('data: ', data);
+
     list.addEventListener('click', e => {
         const target = e.target;
         const tableTask = target.closest('tr').querySelector('.table-task');
+        const tableRow = target.closest('tr');
+        const status = target.closest('tr').querySelector('.task-status');
+        const className = tableRow.classList[1];
+        const index = tableRow.id - 1;
+
         if (target.closest('.btn-success')) {
-            const tableRow = target.closest('.table-row');
-            tableRow.classList.remove('table-light');
-            tableRow.classList.add('table-success');
-            tableTask.classList.remove('task');
-            tableTask.classList.add('text-decoration-line-through');
+            tableTask.classList.toggle('text-decoration-line-through');
+            if (tableTask.classList.contains('text-decoration-line-through')) {
+                tableRow.classList.remove(className);
+                status.textContent = 'Завершено';
+                tableRow.classList.add('table-success');
+            } else {
+                status.textContent = 'В процессе';
+                tableRow.classList.remove('table-success');
+                tableRow.classList.add(data[index].priority);
+            }
+            data.forEach((item) => {
+                if (item.id === index) {
+                    console.log(item.status);
+                    item.status = status.textContent;
+                }
+            });
+
+            const newData = data;
+            setStorage(newData);
         }
     });
 };
@@ -93,7 +121,17 @@ export const taskRedact = (list) => {
         const target = e.target;
         const tableTask = target.closest('tr').querySelector('.table-task');
         if (target.closest('.btn-secondary')) {
-            tableTask.setAttribute('contenteditable', true);
+            tableTask.classList.toggle('redact');
+            if (tableTask.classList.contains('redact')) {
+                tableTask.setAttribute('contenteditable', true);
+                tableTask.addEventListener('keydown', e => {
+                    if (e.keyCode === 13) {
+                        tableTask.setAttribute('contenteditable', false);
+                    }
+                });
+            } else {
+                tableTask.setAttribute('contenteditable', false);
+            }
         }
     });
 };
