@@ -6,8 +6,9 @@ import {formControl, taskFinish, taskDelete, taskRedact}
 
 const container = document.querySelector('.app-container');
 
-const init = () => {
+export const init = () => {
     const data = getStorage();
+
     const todoApp = renderTodoApp(container);
 
     const {
@@ -25,5 +26,4 @@ const init = () => {
     taskDelete(list);
     taskRedact(list);
 };
-init();
-
+// init();

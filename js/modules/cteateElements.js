@@ -119,6 +119,41 @@ const createRow = ({id, task, priority, status}) => {
     return tr;
 };
 
+const createModal = () => {
+    const mainModal = document.createElement('div');
+    mainModal.classList.add('main-modal');
+
+    mainModal.insertAdjacentHTML('afterBegin', `
+    <div class="modal fade show" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="display: block">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5"
+            id="exampleModalLabel">Приветствуем!</h1>
+            </div>
+            <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                <label for="recipient-name"
+                class="col-form-label">Введите Ваше имя:</label>
+                <input type="text" class="form-control"
+                id="recipient-name" required>
+                </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+            <button type="text" class="btn btn-primary">Отправить</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    `);
+
+    return mainModal;
+};
+
 export default {
     createTitle,
     createSelect,
@@ -126,4 +161,5 @@ export default {
     createForm,
     createTable,
     createRow,
+    createModal,
 };

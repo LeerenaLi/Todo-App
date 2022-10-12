@@ -1,5 +1,6 @@
 import elements from './cteateElements.js';
 import {username, setStorage, getStorage, removeStorage} from './storage.js';
+import {init} from '../script.js';
 
 const {
     createRow,
@@ -14,7 +15,6 @@ export const addTaskData = (task) => {
     const dataArr = getStorage(`${username}`);
     dataArr.push(task);
     setStorage(dataArr);
-    console.log('dataArr: ', dataArr);
 };
 
 export const inputControl = (btnAdd, btnReset) => {
@@ -32,7 +32,6 @@ export const inputControl = (btnAdd, btnReset) => {
 export const formControl = (form, list, data, btnAdd, btnReset) => {
     inputControl(btnAdd, btnReset);
     const select = form.querySelector('#select');
-    console.log('select: ', select);
 
     form.addEventListener('submit', e => {
         const data = getStorage();
@@ -44,7 +43,7 @@ export const formControl = (form, list, data, btnAdd, btnReset) => {
             priority: select.value,
             status: 'в процессе',
         };
-        console.log(data);
+
         addTaskPage(newTask, list);
         addTaskData(newTask);
 
@@ -55,7 +54,6 @@ export const formControl = (form, list, data, btnAdd, btnReset) => {
 
 export const taskFinish = (list) => {
     const data = getStorage(`${username}`);
-    console.log('data: ', data);
 
     list.addEventListener('click', e => {
         const target = e.target;
@@ -78,7 +76,6 @@ export const taskFinish = (list) => {
             }
             data.forEach((item) => {
                 if (item.id === index) {
-                    console.log(item.status);
                     item.status = status.textContent;
                 }
             });
@@ -133,6 +130,26 @@ export const taskRedact = (list) => {
                 tableTask.setAttribute('contenteditable', false);
             }
         }
+    });
+};
+
+export const findUsername = () => {
+    const inputName = document.querySelector('#recipient-name');
+    const username = inputName.value;
+    return username;
+};
+
+export const closeModal = () => {
+    document.querySelector('.main-modal').remove();
+};
+
+export const modalControl = () => {
+    const btnPrimary = document.querySelector('.btn-primary');
+    btnPrimary.addEventListener('click', () => {
+        // e.preventDefault();
+        findUsername();
+        closeModal();
+        init();
     });
 };
 

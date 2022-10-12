@@ -1,4 +1,15 @@
-export const username = prompt('Введите Ваше имя');
+import {findUsername, modalControl} from './control.js';
+import {renderModal} from './render.js';
+
+renderModal();
+
+modalControl();
+
+export const username = findUsername();
+console.log('username: ', username);
+
+// export const username = prompt('Введите Ваше имя');
+
 export const setStorage = (task) => {
     localStorage.setItem(username, JSON.stringify(task));
 };
@@ -13,6 +24,5 @@ export const removeStorage = (id) => {
         item.id = index + 1;
     });
     setStorage(newArr);
-    console.log('newArr: ', newArr);
     getStorage();
 };

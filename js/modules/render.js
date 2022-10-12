@@ -7,7 +7,14 @@ const {
     createForm,
     createTable,
     createRow,
+    createModal,
 } = elements;
+
+export const renderModal = () => {
+    const mainModal = createModal();
+    document.body.append(mainModal);
+    return mainModal;
+};
 
 export const renderTodoApp = (container) => {
     container.classList.add('vh-100', 'w-100', 'd-flex',
