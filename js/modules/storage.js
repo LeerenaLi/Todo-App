@@ -1,12 +1,12 @@
-import {findUsername, modalControl} from './control.js';
+import {modalControl} from './control.js';
 import {renderModal} from './render.js';
-
+import {username} from '../script.js';
 renderModal();
 
 modalControl();
 
-export const username = findUsername();
-console.log('username: ', username);
+// export const username = findUsername();
+// console.log('username: ', username);
 
 // export const username = prompt('Введите Ваше имя');
 

@@ -1,6 +1,7 @@
 import elements from './cteateElements.js';
-import {username, setStorage, getStorage, removeStorage} from './storage.js';
+import {setStorage, getStorage, removeStorage} from './storage.js';
 import {init} from '../script.js';
+import {username} from '../script.js';
 
 const {
     createRow,
@@ -146,8 +147,7 @@ export const closeModal = () => {
 export const modalControl = () => {
     const btnPrimary = document.querySelector('.btn-primary');
     btnPrimary.addEventListener('click', () => {
-        // e.preventDefault();
-        findUsername();
+        // findUsername();
         closeModal();
         init();
     });

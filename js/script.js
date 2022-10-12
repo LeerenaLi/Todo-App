@@ -5,9 +5,11 @@ import {formControl, taskFinish, taskDelete, taskRedact}
 
 
 const container = document.querySelector('.app-container');
-
+const inputName = document.querySelector('#recipient-name');
+export const username = inputName.value;
+console.log('username: ', username);
 export const init = () => {
-    const data = getStorage();
+    const data = getStorage(username);
 
     const todoApp = renderTodoApp(container);
 
