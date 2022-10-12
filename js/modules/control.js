@@ -1,7 +1,7 @@
 import elements from './cteateElements.js';
 import {setStorage, getStorage, removeStorage} from './storage.js';
 import {init} from '../script.js';
-import {username} from '../script.js';
+// import {username} from '';
 
 const {
     createRow,
@@ -12,8 +12,8 @@ export const addTaskPage = (task, list) => {
     list.append(createRow(task));
 };
 
-export const addTaskData = (task) => {
-    const dataArr = getStorage(`${username}`);
+export const addTaskData = (task, username) => {
+    const dataArr = getStorage(username);
     dataArr.push(task);
     setStorage(dataArr);
 };
@@ -53,8 +53,8 @@ export const formControl = (form, list, data, btnAdd, btnReset) => {
     });
 };
 
-export const taskFinish = (list) => {
-    const data = getStorage(`${username}`);
+export const taskFinish = (list, username) => {
+    const data = getStorage(username);
 
     list.addEventListener('click', e => {
         const target = e.target;
@@ -149,7 +149,7 @@ export const modalControl = () => {
     btnPrimary.addEventListener('click', () => {
         // findUsername();
         closeModal();
-        init();
+        init(findUsername);
     });
 };
 

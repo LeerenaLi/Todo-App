@@ -1,6 +1,6 @@
 import {modalControl} from './control.js';
 import {renderModal} from './render.js';
-import {username} from '../script.js';
+// import {username} from '../script.js';
 renderModal();
 
 modalControl();
@@ -10,15 +10,15 @@ modalControl();
 
 // export const username = prompt('Введите Ваше имя');
 
-export const setStorage = (task) => {
-    localStorage.setItem(username, JSON.stringify(task));
+export const setStorage = (task, username) => {
+    localStorage.setItem(`${username}`, JSON.stringify(task));
 };
 
-export const getStorage = () =>
-    JSON.parse(localStorage.getItem(`${username}`)) || [];
+export const getStorage = (username) =>
+    JSON.parse(localStorage.getItem(username)) || [];
 
-export const removeStorage = (id) => {
-    const dataArr = getStorage(`${username}`);
+export const removeStorage = (id, username) => {
+    const dataArr = getStorage(username);
     const newArr = dataArr.filter(item => item.id !== id);
     newArr.forEach((item, index) => {
         item.id = index + 1;
