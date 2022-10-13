@@ -5,10 +5,10 @@ import {formControl, taskFinish, taskDelete, taskRedact}
 
 
 const container = document.querySelector('.app-container');
-// const inputName = document.querySelector('#recipient-name');
-// export const username = inputName.value;
-// console.log('username: ', username);
+
+
 export const init = (username) => {
+    console.log(username);
     const data = getStorage(username);
 
     const todoApp = renderTodoApp(container);
@@ -21,11 +21,11 @@ export const init = (username) => {
     } = todoApp;
 
     renderTasks(list, data);
-    // selectControl();
-    formControl(form, list, data, btnAdd, btnReset);
 
-    taskFinish(list);
-    taskDelete(list);
+    formControl(form, list, data, btnAdd, btnReset, username);
+
+    taskFinish(list, username);
+    taskDelete(list, username);
     taskRedact(list);
 };
 // init();

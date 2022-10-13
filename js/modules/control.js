@@ -15,7 +15,7 @@ export const addTaskPage = (task, list) => {
 export const addTaskData = (task, username) => {
     const dataArr = getStorage(username);
     dataArr.push(task);
-    setStorage(dataArr);
+    setStorage(dataArr, username);
 };
 
 export const inputControl = (btnAdd, btnReset) => {
@@ -30,12 +30,12 @@ export const inputControl = (btnAdd, btnReset) => {
 };
 
 
-export const formControl = (form, list, data, btnAdd, btnReset) => {
+export const formControl = (form, list, data, btnAdd, btnReset, username) => {
     inputControl(btnAdd, btnReset);
     const select = form.querySelector('#select');
 
     form.addEventListener('submit', e => {
-        const data = getStorage();
+        const data = getStorage(username);
         e.preventDefault();
 
         const newTask = {
@@ -46,7 +46,7 @@ export const formControl = (form, list, data, btnAdd, btnReset) => {
         };
 
         addTaskPage(newTask, list);
-        addTaskData(newTask);
+        addTaskData(newTask, username);
 
         form.reset();
         btnAdd.disabled = true;
@@ -55,6 +55,7 @@ export const formControl = (form, list, data, btnAdd, btnReset) => {
 
 export const taskFinish = (list, username) => {
     const data = getStorage(username);
+    console.log('data: ', data);
 
     list.addEventListener('click', e => {
         const target = e.target;
@@ -76,28 +77,27 @@ export const taskFinish = (list, username) => {
                 tableRow.classList.add(data[index].priority);
             }
             data.forEach((item) => {
-                if (item.id === index) {
+                if (item.id === tableRow.id) {
                     item.status = status.textContent;
                 }
             });
 
             const newData = data;
-            setStorage(newData);
+            setStorage(newData, username);
         }
     });
 };
 
-export const taskDelete = (list) => {
+export const taskDelete = (list, username) => {
     list.addEventListener('click', e => {
         const target = e.target;
         const dataId = target.closest('.table-row').id;
-        console.log('dataId: ', dataId);
         if (target.closest('.btn-danger')) {
             const queston = confirm('Точно удалить?');
             if (queston === true) {
                 target.closest('.table-row').remove();
 
-                removeStorage(+dataId);
+                removeStorage(+dataId, username);
 
                 const rows = document.querySelectorAll('.table-row');
                 rows.forEach((item, index) => {
@@ -147,9 +147,9 @@ export const closeModal = () => {
 export const modalControl = () => {
     const btnPrimary = document.querySelector('.btn-primary');
     btnPrimary.addEventListener('click', () => {
-        // findUsername();
+        const username = findUsername();
         closeModal();
-        init(findUsername);
+        init(username);
     });
 };
 
